@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% load static %} {% load leaflet_tags %}
+<html lang="en">
+  <head>
+    <title>My Map</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static '/css/style.css' %}"
+    />
+    {% leaflet_js %} {% leaflet_css %}
+    <style>
+      .grid-container {
+        display: grid;
+        grid-template-columns: 70% auto; /* 60% pour la carte, auto pour les informations du point sélectionné */
+        height : 100%;
+        grid-gap: 20px; /* Espace entre les colonnes */
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="container" style="height:80%;">{% block contenu %} {% endblock %}</div>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+{% extends "map/base.html" %}
+{% load static %} {% load leaflet_tags %}
+
+
+{% block contenu %}
+<h3>Ma Map</h3>
+    <br />
+
+    <div class="grid-container">
+      <div id="map"></div>
+
+      <div id="info">
+
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      var PointInteretDataUrl = "{% url 'map:pointsInteret_data' %}";
+      var itinerairesDataUrl = "{% url 'map:itineraires_data' %}";
+
+      // Créer une carte Leaflet
+    </script>
+
+    <script
+      type="text/javascript"
+      src="{% static '/js/load_data.js' %}"
+    ></script>
+
+
+{% endblock %}
