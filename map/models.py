@@ -3,7 +3,7 @@ from django.contrib.gis.db import models
 from django.contrib.gis.geos import GEOSGeometry
 
 ##test
-
+#commentaire de salomé
 
 class PointInteret(models.Model):
     # Distinguer le nom unique, ajouter un help texte
