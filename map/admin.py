@@ -50,7 +50,7 @@ class LienRenumarItineraireInline(admin.StackedInline):
 class ItineraireAdmin(LeafletGeoAdmin):
     inlines = [PointDansItineraireInline, MateriauxDansItineraireInline, PersonnageDansItineraireInline, LienRenumarItineraireInline, ItineraireDansGlossaireInLine]
     list_display = ('depart', 'arrivee', 'commentaire')
-    search_fields = ('depart', 'arrivee', 'commentaire')
+    search_fields = ('depart', 'arrivee')
 
 class MetierDansGlossaireInLine(admin.TabularInline):
     model = MetierDansGlossaire
