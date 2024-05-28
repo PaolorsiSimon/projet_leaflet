@@ -1,3 +1,4 @@
+#POUR WINDOWS
 installer osgeo4w, ne pas changer l'endroit du telechargement
 installer requirements_leaflet.txt, verifier si l'installation est effectuée correctement
 ouvrire stackbuilder et ajouter postgis a postgres
