@@ -5,6 +5,7 @@ from django.views.generic import TemplateView
 from django.core.serializers import serialize
 from map.models import PointInteret, Itineraire, TypePointInteret, PointDansItineraire
 
+#AJOUTER LES VIEWS POUR LE FRONT
 class MapPageView(TemplateView):
     template_name= 'map/map.html'
 

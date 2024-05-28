@@ -4,6 +4,8 @@ from map import views
 
 app_name = 'map'
 
+#AJOUTER URL POUR FRONT
+
 urlpatterns = [
     path('', views.MapPageView.as_view(), name='map'),
     path('itineraires_data/', views.itineraires_dataset, name='itineraires_data'),
