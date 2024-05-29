@@ -58,7 +58,7 @@ class TypePointInteret(models.Model):
         max_length=255
     )
     #ajouter help_text
-    description = models.TextField(help_text="Ajouter une description.",null=True)
+    description = models.TextField(help_text="Ajouter une description.",blank=True) # Description facultative
 
     def __str__(self):
         return self.type
@@ -252,7 +252,7 @@ class PersonnageDansItineraire(models.Model):
 
 class LienRenumarPointInteret(models.Model):
     point_interet = models.ForeignKey(PointInteret, on_delete=models.CASCADE)
-    lien_renumar = models.ForeignKey(LienRenumar, on_delete=models.CASCADE)
+    lien_renumar = models.ForeignKey(LienRenumar, on_delete=models.SET_NULL, null=True)
 #ajout contrainte sur liens pour n'avoir q'une seule fois le meme lien
     def __str__(self):
         return f'{self.point_interet} - {self.lien_renumar}'
@@ -265,7 +265,7 @@ class LienRenumarPointInteret(models.Model):
 
 class LienRenumarItineraire(models.Model):
     itineraire = models.ForeignKey(Itineraire, on_delete=models.CASCADE)
-    lien_renumar = models.ForeignKey(LienRenumar, on_delete=models.CASCADE)
+    lien_renumar = models.ForeignKey(LienRenumar, on_delete=models.SET_NULL, null=True)
 #ajout contrainte sur lien pour n'avoir qu'une seule fois le meme lien
     def __str__(self):
         return f'{self.itineraire} - {self.lien_renumar}'
