@@ -1,8 +1,49 @@
 from django.db import models
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import GEOSGeometry
-from django.db.models import F, Max
-import geopandas as gpd
+
+import json
+from geojson import Feature, FeatureCollection, LineString
+
+
+
+
+class CoursDeau(models.Model):
+    geo_point_2d = models.CharField(max_length=255)
+    id = models.CharField(max_length=255, primary_key=True)
+    prec_plani = models.FloatField()
+    prec_alti = models.FloatField()
+    artif = models.CharField(max_length=255)
+    fictif = models.CharField(max_length=255)
+    franchisst = models.CharField(max_length=255)
+    nom = models.CharField(max_length=255)
+    pos_sol = models.CharField(max_length=255)
+    regime = models.CharField(max_length=255)
+    z_ini = models.FloatField()
+    z_fin = models.FloatField()
+    commune = models.CharField(max_length=255)
+    code_insee = models.CharField(max_length=255)
+    epci_name = models.CharField(max_length=255)
+    dep_name = models.CharField(max_length=255)
+    reg_name = models.CharField(max_length=255)
+    geom = models.MultiLineStringField(srid=4326)
+
+    def __str__(self):
+        return self.nom
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #commentaire sur branche itineraires_modifs
 class PointInteret(models.Model):
 
@@ -25,7 +66,8 @@ class PointInteret(models.Model):
 
     class Meta:
         verbose_name_plural = "Points d'intérêt"
-#######################################################
+
+
 class Itineraire(models.Model):
     itineraire = models.LineStringField()
     scenario = models.TextField()
@@ -59,19 +101,9 @@ class PointDansItineraire(models.Model):
         return f"{self.fk_pointInteret} à la position {self.positionDansItineraire} dans {self.fk_itineraire}"
 
 
-class CoursDeau(models.Model):
-    itineraire = models.LineStringField()
 
-    @classmethod
-    def import_shapefile(cls, shapefile_path):
-        gdf = gpd.read_file(shapefile_path)
 
-        for index, row in gdf.iterrows():
-            cours_deau = cls()
-            cours_deau.itineraire = row['geometry']
-            cours_deau.save()
 
-#######################################################
 
 # ---------- ICI TOUTE LES CLASSES PRINCIPALES -----------
 class TypePointInteret(models.Model):

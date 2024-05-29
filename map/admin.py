@@ -7,8 +7,12 @@ from .models import (
     Materiaux, Glossaire, Metier, Personnage, LienRenumar,
     PointDansGlossaire, ItineraireDansGlossaire, MetierDansGlossaire, 
     MateriauxDansPoint, MateriauxDansItineraire, PersonnageDansItineraire,
-    LienRenumarPointInteret, LienRenumarItineraire
+    LienRenumarPointInteret, LienRenumarItineraire, CoursDeau
 )
+
+
+class CoursDeauAdmin(LeafletGeoAdmin):
+    list_display = ('nom',)
 
 ##pour point d'intérêt
 class LienRenumarPointInteretInLine(admin.TabularInline):
@@ -67,6 +71,8 @@ class MetierAdmin(admin.ModelAdmin):
 
 admin.site.register(Metier, MetierAdmin)
 admin.site.register(Itineraire, ItineraireAdmin)
+admin.site.register(CoursDeau, CoursDeauAdmin)
+
 admin.site.register(PointInteret, PointInteretAdmin)
 admin.site.register(Glossaire)
 admin.site.register(Materiaux)
