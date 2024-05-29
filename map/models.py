@@ -165,11 +165,7 @@ class PointDansGlossaire(models.Model):
         verbose_name = 'point/glossaire'
         constraints=[
             models.UniqueConstraint(fields=['fk_pointInteret','fk_glossaire'], name='unique_pointDansGlossaire')
-        ]
-    def clean(self):
-        # Vérifie que le mot de glossaire appartient bien à la présentation du point d'intérêt
-        if self.fk_glossaire.mot not in self.fk_pointInteret.description:
-            raise ValidationError("Le mot de glossaire doit appartenir à la description du point d'intérêt sélectionné.")    
+        ]   
 
 class ItineraireDansGlossaire(models.Model):
     #ajouter un help text pour bien prevnir qu'un mot de glossaire n'est ajouter que si il appartient au scenario
@@ -184,11 +180,8 @@ class ItineraireDansGlossaire(models.Model):
         verbose_name = 'itineraire/glossaire'
         constraints=[
             models.UniqueConstraint(fields=['fk_itineraire','fk_glossaire'], name='unique_itineraireDansGlossaire')
-        ]
-    def clean(self):
-    # Vérifie que le mot de glossaire appartient bien à la description de l'itinéraire
-        if self.fk_glossaire.mot not in self.fk_itineraire.description:
-            raise ValidationError("Le mot de glossaire doit appartenir à la description de l'itinéraire sélectionné.")    
+        ]   
+        
 
 class MetierDansGlossaire(models.Model):
     fk_metier = models.ForeignKey('Metier', models.CASCADE)
