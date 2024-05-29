@@ -1,4 +1,52 @@
 html,
+
+
+
 body {
-  height: 95%;
+  background-color: #CFC197; /* A changer selon préférence */
+  font-family: Arial, sans-serif;
+  margin: 0;
+  height: 95%; /* Rajout de ce qu'il y avait déjà */
+}
+
+/* Style bannière */
+.banner {
+  background: linear-gradient(90deg, #3BA3A3, #2A8387, #1B4B4B);
+  color: white;
+  padding: 10px 0;
+  text-align: center;
+  font-family :fantasy;
+  font-size: large;
+}
+
+/* Barre de navigation latérale */
+.navbar {
+  background-color: #CFD8DC; /* A changer selon préférence */
+  overflow: hidden;
+  display: flex;
+  justify-content: center; /* Centrer les éléments horizontalement */
+}
+
+.navbar ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.navbar ul li {
+  padding: 8px 16px; /* Espacement autour des liens */
+  text-align: center;
+}
+
+.navbar ul li a {
+  color: #2A8387;
+  text-decoration: none;
+  display: block;
+}
+
+/* Contenu principal */
+.content {
+  margin-left: 220px;
+  padding: 20px;
 }
