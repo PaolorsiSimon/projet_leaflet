@@ -1,9 +1,10 @@
 from django.db import models
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import GEOSGeometry
+from shapely.wkt import loads
 
 import json
-from geojson import Feature, FeatureCollection, LineString
+from geojson import Feature, FeatureCollection, LineString, MultiLineString, Point
 
 
 class LoireModel(models.Model):
@@ -13,15 +14,6 @@ class LoireModel(models.Model):
     candidat = models.CharField(max_length=255, null=True)
     classe = models.IntegerField()
     geom = models.MultiLineStringField(srid=4326)
-
-
-
-
-
-
-
-
-
 
 
 
@@ -62,6 +54,9 @@ class Itineraire(models.Model):
     @property
     def points_ordre(self):
         return self.points.all().order_by('positionDansItineraire')
+    
+    
+
 
 
 

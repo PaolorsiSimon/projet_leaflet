@@ -9,10 +9,9 @@ urlpatterns = [
     path('itineraires_data/', views.itineraires_dataset, name='itineraires_data'),
     path('pointsInteret_data/', views.pointsInteret_dataset, name='pointsInteret_data'),
     path('typePoints_data/', views.type_point_dataset, name='typePoints_data'),
+    path('creer-itineraire/', views.creer_itineraire, name='creer_itineraire'),
 
-
-
-    
+  
 ]
 
 
