@@ -107,8 +107,8 @@ function chargerItinerairesGeoJSON(map) {
           layer.on('click', function () {
             document.getElementById('info').innerHTML = `
               <h4>Informations sur l'itinéraire sélectionné :</h4>
-              <p>Nom du départ : ${feature.properties.depart}</p>
-              <p>Nom de l'arrivée : ${feature.properties.arrivee}</p>
+              <p>Nom du départ : ${feature.properties.depart.nom}</p>
+              <p>Nom de l'arrivée : ${feature.properties.arrivee.nom}</p>
               <p>Scenario : ${feature.properties.scenario}</p>
             `;
           });
@@ -128,6 +128,8 @@ function chargerItinerairesGeoJSON(map) {
       console.error("Erreur lors du chargement des données GeoJSON des itinéraires:", error);
     });
 }
+
+
 
 
 

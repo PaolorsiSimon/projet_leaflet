@@ -1,12 +1,11 @@
 from django.db import models
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import GEOSGeometry
-
+from django.db.models import F, Max
+import geopandas as gpd
 #commentaire sur branche itineraires_modifs
-##test
-
-
 class PointInteret(models.Model):
+
     # Distinguer le nom unique, ajouter un help texte
     nom = models.CharField(
         max_length=255,
@@ -26,31 +25,53 @@ class PointInteret(models.Model):
 
     class Meta:
         verbose_name_plural = "Points d'intérêt"
-
+#######################################################
 class Itineraire(models.Model):
     itineraire = models.LineStringField()
     scenario = models.TextField()
     commentaire = models.TextField(help_text="Commentaire sur l'itinéraire", null=True)
-
+    depart = models.ForeignKey(PointInteret, on_delete=models.SET_NULL, null=True, related_name='depart_itineraires')
+    arrivee = models.ForeignKey(PointInteret, on_delete=models.SET_NULL, null=True, related_name='arrivee_itineraires')
 
     class Meta:
         verbose_name_plural = "Itinéraires"
-    
-    #passer par la table intermediare pour les points
-    @property
-    def depart(self):
-        first_point = self.points_ordre.first()
-        return first_point.fk_pointInteret.nom if first_point else None
-
-    @property
-    def arrivee(self):
-        last_point = self.points_ordre.last()
-        return last_point.fk_pointInteret.nom if last_point else None
 
     @property
     def points_ordre(self):
         return self.points.all().order_by('positionDansItineraire')
 
+
+
+class PointDansItineraire(models.Model):
+    fk_pointInteret = models.ForeignKey('PointInteret', models.CASCADE)
+    fk_itineraire = models.ForeignKey('Itineraire', models.CASCADE, related_name="points")
+    positionDansItineraire = models.IntegerField()
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['fk_pointInteret', 'fk_itineraire',], name='unique_pointDansItineraire'),
+            models.UniqueConstraint(fields=['fk_itineraire', 'positionDansItineraire'], name='unique_positionDansItineraire')
+
+        ]
+        ordering = ['positionDansItineraire']
+
+    def __str__(self):
+        return f"{self.fk_pointInteret} à la position {self.positionDansItineraire} dans {self.fk_itineraire}"
+
+
+class CoursDeau(models.Model):
+    itineraire = models.LineStringField()
+
+    @classmethod
+    def import_shapefile(cls, shapefile_path):
+        gdf = gpd.read_file(shapefile_path)
+
+        for index, row in gdf.iterrows():
+            cours_deau = cls()
+            cours_deau.itineraire = row['geometry']
+            cours_deau.save()
+
+#######################################################
 
 # ---------- ICI TOUTE LES CLASSES PRINCIPALES -----------
 class TypePointInteret(models.Model):
@@ -195,24 +216,6 @@ class MetierDansGlossaire(models.Model):
             models.UniqueConstraint(fields=['fk_metier','fk_glossaire'], name='unique_metierDansGlossaire')
         ]
 
-
-##liens vers point et itineraire
-
-class PointDansItineraire(models.Model):
-    fk_pointInteret = models.ForeignKey('PointInteret', models.CASCADE)
-    fk_itineraire = models.ForeignKey('Itineraire', models.CASCADE, related_name="points")
-    positionDansItineraire = models.IntegerField()
-
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=['fk_pointInteret', 'fk_itineraire',], name='unique_pointDansItineraire'),
-            models.UniqueConstraint(fields=['fk_itineraire', 'positionDansItineraire'], name='unique_positionDansItineraire')
-
-        ]
-        ordering = ['positionDansItineraire']
-    
-    def __str__(self):
-        return f"{self.fk_pointInteret} à la position {self.positionDansItineraire} dans {self.fk_itineraire}"
 
 
 

@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib import admin
+from flask import redirect
 from leaflet.admin import LeafletGeoAdmin
 from .models import (
     PointInteret, Itineraire, PointDansItineraire, TypePointInteret, 
@@ -30,9 +31,6 @@ class ItineraireDansGlossaireInLine(admin.TabularInline):
     model = ItineraireDansGlossaire
     extra = 1
 
-class PointDansItineraireInline(admin.TabularInline):
-    model = PointDansItineraire
-    extra = 1
 
 class MateriauxDansItineraireInline(admin.TabularInline):
     model = MateriauxDansItineraire
@@ -46,11 +44,18 @@ class LienRenumarItineraireInline(admin.StackedInline):
     model = LienRenumarItineraire
     extra = 1
 
+#####################################################################################
+class PointDansItineraireInline(admin.TabularInline):
+    model = PointDansItineraire
+    extra = 1
+    ordering = ['positionDansItineraire']
+
 
 class ItineraireAdmin(LeafletGeoAdmin):
     inlines = [PointDansItineraireInline, MateriauxDansItineraireInline, PersonnageDansItineraireInline, LienRenumarItineraireInline, ItineraireDansGlossaireInLine]
     list_display = ('depart', 'arrivee', 'commentaire')
-    search_fields = ('depart', 'arrivee')
+
+#####################################################################################
 
 class MetierDansGlossaireInLine(admin.TabularInline):
     model = MetierDansGlossaire
