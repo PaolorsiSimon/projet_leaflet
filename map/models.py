@@ -260,12 +260,26 @@ class PersonnageDansItineraire(models.Model):
 class LienRenumarPointInteret(models.Model):
     point_interet = models.ForeignKey(PointInteret, on_delete=models.CASCADE)
     lien_renumar = models.ForeignKey(LienRenumar, on_delete=models.CASCADE)
+#ajout contrainte sur liens pour n'avoir q'une seule fois le meme lien
+    def __str__(self):
+        return f'{self.point_interet} - {self.lien_renumar}'
 
-    #ajouter contrainte sur liens pour n'avoir q'une seule fois le meme lien
+    class Meta:
+        verbose_name = 'Lien Renumar/Point d\'Intérêt'
+        constraints = [
+            models.UniqueConstraint(fields=['point_interet', 'lien_renumar'], name='unique_lien_renumar_point_interet')
+        ]
 
 class LienRenumarItineraire(models.Model):
     itineraire = models.ForeignKey(Itineraire, on_delete=models.CASCADE)
     lien_renumar = models.ForeignKey(LienRenumar, on_delete=models.CASCADE)
+#ajout contrainte sur lien pour n'avoir qu'une seule fois le meme lien
+    def __str__(self):
+        return f'{self.itineraire} - {self.lien_renumar}'
 
-    #ajouter contrainte sur lien pour n'avoir qu'une seule fois le meme lien
+    class Meta:
+        verbose_name = 'Lien Renumar/Itinéraire'
+        constraints = [
+            models.UniqueConstraint(fields=['itineraire', 'lien_renumar'], name='unique_lien_renumar_itineraire')
+        ]
 
