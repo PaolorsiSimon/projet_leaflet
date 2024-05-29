@@ -50,3 +50,31 @@ body {
   margin-left: 220px;
   padding: 20px;
 }
+
+/* Style du choix quadrillé des sujets de lecture de la documentation A REVOIR */
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+/* Style du contenu de la grille */
+.grid-item {
+  background-color: #308484;
+  padding: 20px;
+  border: 1px solid #3BA3A3;
+  border-radius: 5px;
+}
+
+.grid-item h2 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.grid-item p {
+  font-size: 1em;
+  margin-bottom: 10px;
+  text-align: justify;
+}

@@ -1,0 +1,40 @@
+<!--Je prend pour base d'affichage base.html avec la balise extends-->
+{% extends 'navbar.html' %}
+
+{% block banner %}
+  <!-- début du body, j'indique un conteneur, je donne au site un nom, cela pour préparer à une mise en forme css propre -->
+  <body>
+    <header class ="banner">
+        <h1>Chaloire</h1>
+    </header>
+{% endblock %}
+    
+
+{% block content %}
+<!-- Contenu du site qui va apparaitre dans le conteneur et sous la barre des onglets --> 
+    
+    <div id="content">
+      <h2>Documentation</h2>
+      
+      <h3>Quel est le sujet qui vous interresse ?</h3>
+      
+<!-- Insérer ci dessous la liste quadrillée des sujets écris à consulter (ligne 54 du CSS) -->
+
+    <div class="grid-container">
+        {% for sujet in sujets %}
+        <div class="grid-item">
+            <h2>{{ sujet.title }}</h2>
+            <p>{{ sujet.summary }}</p>
+            <a href="{{ sujet.url }}">Lire la suite</a>
+        </div>
+        {% endfor %}
+    </div>
+
+<!-- Fin de la partie grille sujet, à retravailler en fonction des sujets ajoutés par la suite -->
+
+    </div>
+
+
+
+  </body>
+{% endblock %}

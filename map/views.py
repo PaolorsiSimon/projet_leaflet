@@ -9,6 +9,9 @@ from map.models import PointInteret, Itineraire, TypePointInteret, PointDansItin
 def home(request):
     return render(request, 'home.html')
 
+def doc(request):
+    return render(request, 'doc.html')
+
 
 
 
