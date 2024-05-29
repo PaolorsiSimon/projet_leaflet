@@ -1,9 +1,10 @@
 from django.db import models
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import GEOSGeometry
+from django.core.exceptions import ValidationError
 
 ##test
-#commentaire de salomé
+
 
 class PointInteret(models.Model):
     # Distinguer le nom unique, ajouter un help texte
@@ -57,7 +58,7 @@ class TypePointInteret(models.Model):
         max_length=255
     )
     #ajouter help_text
-    description = models.TextField(null=True)
+    description = models.TextField(help_text="Ajouter une description.",null=True)
 
     def __str__(self):
         return self.type
@@ -86,7 +87,7 @@ class Materiaux(models.Model):
 
 
 class Glossaire(models.Model):
-    mot=models.CharField(max_length=255)
+    mot=models.CharField(max_length=255, help_text="Ajoutez ce mot uniquement s'il appartient à la présentation d'un point d'intérêt.")
     definition = models.TextField()
 
     class Meta:
@@ -154,8 +155,8 @@ class LienRenumar(models.Model):
 ### les liens vers le glossaire 
 class PointDansGlossaire(models.Model):
     #ajouter un help text pour bien prevnir qu'un mot de glossaire n'est ajouter que si il appartient a la presentation de point d'interet
-    fk_pointInteret = models.ForeignKey('PointInteret', models.CASCADE)
-    fk_glossaire = models.ForeignKey('Glossaire', models.CASCADE)
+    fk_pointInteret = models.ForeignKey('PointInteret', models.CASCADE, help_text="Sélectionnez le point d'intérêt correspondant.")
+    fk_glossaire = models.ForeignKey('Glossaire', models.CASCADE, help_text="Ajoutez ce mot uniquement s'il appartient à la présentation du point d'intérêt sélectionné.")
 
     def __str__(self):
         return f'{self.fk_pointInteret}/{self.fk_glossaire}'
@@ -165,12 +166,16 @@ class PointDansGlossaire(models.Model):
         constraints=[
             models.UniqueConstraint(fields=['fk_pointInteret','fk_glossaire'], name='unique_pointDansGlossaire')
         ]
+    def clean(self):
+        # Vérifie que le mot de glossaire appartient bien à la présentation du point d'intérêt
+        if self.fk_glossaire.mot not in self.fk_pointInteret.description:
+            raise ValidationError("Le mot de glossaire doit appartenir à la description du point d'intérêt sélectionné.")    
 
 class ItineraireDansGlossaire(models.Model):
     #ajouter un help text pour bien prevnir qu'un mot de glossaire n'est ajouter que si il appartient au scenario
 
-    fk_itineraire = models.ForeignKey('Itineraire', models.CASCADE)
-    fk_glossaire = models.ForeignKey('Glossaire', models.CASCADE)
+    fk_itineraire = models.ForeignKey('Itineraire', models.CASCADE, help_text="Sélectionnez l'itinéraire correspondant.")
+    fk_glossaire = models.ForeignKey('Glossaire', models.CASCADE, help_text="Ajoutez ce mot uniquement s'il appartient à la description de l'itinéraire sélectionné.")
 
     def __str__(self):
         return f'{self.fk_itineraire}/{self.fk_glossaire}'
@@ -180,6 +185,10 @@ class ItineraireDansGlossaire(models.Model):
         constraints=[
             models.UniqueConstraint(fields=['fk_itineraire','fk_glossaire'], name='unique_itineraireDansGlossaire')
         ]
+    def clean(self):
+    # Vérifie que le mot de glossaire appartient bien à la description de l'itinéraire
+        if self.fk_glossaire.mot not in self.fk_itineraire.description:
+            raise ValidationError("Le mot de glossaire doit appartenir à la description de l'itinéraire sélectionné.")    
 
 class MetierDansGlossaire(models.Model):
     fk_metier = models.ForeignKey('Metier', models.CASCADE)
