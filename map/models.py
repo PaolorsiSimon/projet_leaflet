@@ -6,32 +6,13 @@ import json
 from geojson import Feature, FeatureCollection, LineString
 
 
-
-
-class CoursDeau(models.Model):
-    geo_point_2d = models.CharField(max_length=255)
-    id = models.CharField(max_length=255, primary_key=True)
-    prec_plani = models.FloatField()
-    prec_alti = models.FloatField()
-    artif = models.CharField(max_length=255)
-    fictif = models.CharField(max_length=255)
-    franchisst = models.CharField(max_length=255)
-    nom = models.CharField(max_length=255)
-    pos_sol = models.CharField(max_length=255)
-    regime = models.CharField(max_length=255)
-    z_ini = models.FloatField()
-    z_fin = models.FloatField()
-    commune = models.CharField(max_length=255)
-    code_insee = models.CharField(max_length=255)
-    epci_name = models.CharField(max_length=255)
-    dep_name = models.CharField(max_length=255)
-    reg_name = models.CharField(max_length=255)
+class LoireModel(models.Model):
+    gid = models.IntegerField()
+    cdentitehy = models.CharField(max_length=255)
+    nomentiteh = models.CharField(max_length=255)
+    candidat = models.CharField(max_length=255, null=True)
+    classe = models.IntegerField()
     geom = models.MultiLineStringField(srid=4326)
-
-    def __str__(self):
-        return self.nom
-
-
 
 
 
