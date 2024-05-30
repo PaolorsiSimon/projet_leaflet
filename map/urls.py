@@ -14,6 +14,7 @@ urlpatterns = [
 #AJOUT POUR FRONT CI DESSOUS
     path('', views.home, name='home'),
     path('doc/', views.doc, name='doc'),
+    path('glossaire/', views.glossaire, name='glossaire'),
 
 
 

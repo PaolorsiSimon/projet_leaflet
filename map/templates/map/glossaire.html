@@ -1,0 +1,44 @@
+<!--Je prend pour base d'affichage base.html (navbar (ERREUR A REVOIR)) avec la balise extends-->
+{% extends 'map/navbar.html' %}
+
+{% block banner %}
+  <!-- début du body, j'indique un conteneur, je donne au site un nom, cela pour préparer à une mise en forme css propre -->
+  <body>
+    <header class ="banner">
+        <h1>Chaloire</h1>
+    </header>
+{% endblock %}
+    
+
+{% block content %}
+<!-- Contenu du site qui va apparaitre dans le conteneur et sous la barre des onglets --> 
+    
+    <div id="content">
+      <h2>Glossaire</h2>
+      
+      <h3>Quel est le mot à rechercher ?</h3>
+      
+      <!-- PARTIE CI DESSOUS A VERIFIER-->
+      <body>
+        
+        <form method="get" action="{% url 'glossaire' %}">
+            {{ form.as_p }}
+            <button type="submit">Rechercher</button>
+        </form>
+    
+        <h2>Results</h2>
+        {% if mot %}
+            <p>Résultat pour : "{{ mot }}":</p>
+        {% endif %}
+        <ul>
+            {% for mot in resultats %}
+                <li><strong>{{ mot.mot}}</strong>: {{ mot.definition }}</li>
+            {% empty %}
+                <li> Aucune correspondance trouvée </li>
+            {% endfor %}
+        </ul>
+
+    </div>
+
+</body>
+{% endblock %}
