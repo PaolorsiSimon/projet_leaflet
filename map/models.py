@@ -31,7 +31,7 @@ class Itineraire(models.Model):
     itineraire = models.LineStringField()
     scenario = models.TextField()
     commentaire = models.TextField(help_text="Commentaire sur l'itinéraire", null=True)
-
+#mettre commentaire pas obligatoire
 
     class Meta:
         verbose_name_plural = "Itinéraires"
@@ -58,7 +58,7 @@ class TypePointInteret(models.Model):
         max_length=255
     )
     #ajouter help_text
-    description = models.TextField(help_text="Ajouter une description.",blank=True) # Description facultative
+    description = models.TextField(help_text="Ajouter une description.",default='description du type') # Description facultative
 
     def __str__(self):
         return self.type
@@ -106,6 +106,7 @@ class Glossaire(models.Model):
 
 class Metier(models.Model):
     nom=models.CharField(max_length=255)
+    #mettre commentaire pas obligatoire
     description = models.TextField()
     class Meta:
         verbose_name_plural = "Metiers"
@@ -141,12 +142,14 @@ class Personnage(models.Model):
         return f"{self.prenom} {self.nom}"
     
 class LienRenumar(models.Model):
-    #ajouter un titre
+    #ajout de titre
+    titre= models.CharField(max_length=255, default='lien renumar')
     lien = models.URLField()
-    commentaire = models.TextField()
+    #mettre commentaire pas obligatoire
+    commentaire = models.TextField(null=True)
     
     def __str__(self):
-        return self.lien
+        return self.titre
 
 
 # ---------- ICI TOUTE LES CLASSES SECONDAIRES, liaisons entre les clases principales -----------
@@ -236,6 +239,7 @@ class MateriauxDansPoint(models.Model):
 class MateriauxDansItineraire(models.Model):
     fk_itineraire = models.ForeignKey('Itineraire', models.CASCADE)
     fk_materiaux = models.ForeignKey('Materiaux', models.CASCADE)
+    #mettre commentaire pas obligatoire
     commentaire = models.TextField(
         null=True,
         help_text="Ajouter si l'information est disponible la quantité et la valeur"
