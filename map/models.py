@@ -30,7 +30,7 @@ class PointInteret(models.Model):
 class Itineraire(models.Model):
     itineraire = models.LineStringField()
     scenario = models.TextField()
-    commentaire = models.TextField(help_text="Commentaire sur l'itinéraire", null=True)
+    commentaire = models.TextField(help_text="Commentaire sur l'itinéraire", null=True, blank=True)
 #mettre commentaire pas obligatoire
 
     class Meta:
@@ -58,7 +58,7 @@ class TypePointInteret(models.Model):
         max_length=255
     )
     #ajouter help_text
-    description = models.TextField(help_text="Ajouter une description.",default='description du type') # Description facultative
+    description = models.TextField(help_text="Ajouter une description.",null=True, blank=True) # Description facultative
 
     def __str__(self):
         return self.type
@@ -107,7 +107,7 @@ class Glossaire(models.Model):
 class Metier(models.Model):
     nom=models.CharField(max_length=255)
     #mettre commentaire pas obligatoire
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True, help_text='Description du métier')
     class Meta:
         verbose_name_plural = "Metiers"
 
@@ -146,7 +146,7 @@ class LienRenumar(models.Model):
     titre= models.CharField(max_length=255, default='lien renumar')
     lien = models.URLField()
     #mettre commentaire pas obligatoire
-    commentaire = models.TextField(null=True)
+    commentaire = models.TextField(null=True, blank=True)
     
     def __str__(self):
         return self.titre
@@ -242,7 +242,8 @@ class MateriauxDansItineraire(models.Model):
     #mettre commentaire pas obligatoire
     commentaire = models.TextField(
         null=True,
-        help_text="Ajouter si l'information est disponible la quantité et la valeur"
+        help_text="Ajouter si l'information est disponible la quantité et la valeur",
+        blank=True
         )
 
 class PersonnageDansItineraire(models.Model):
