@@ -1,6 +1,10 @@
 html,
 
-
+H2 {
+  text-align: center;
+  font-size: larger;
+  font-family: Arial, sans-serif;
+  }
 
 body {
   background-color: #CFC197; /* A changer selon préférence */
@@ -55,7 +59,7 @@ body {
 
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 20px;
 }
 
@@ -69,12 +73,16 @@ body {
 
 .grid-item h2 {
   font-size: 1.5em;
+  font-family: Arial, sans-serif;
+  color:#CFD8DC;
   margin-bottom: 10px;
   text-align: center;
 }
 
 .grid-item p {
   font-size: 1em;
+  font-family: Arial, sans-serif;
+  color:#CFD8DC;
   margin-bottom: 10px;
-  text-align: justify;
+  text-align: left;
 }

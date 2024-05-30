@@ -1,18 +1,12 @@
 
 <!--Je prend pour base d'affichage base.html avec la balise extends-->
-{% extends 'navbar.html' %}
+{% extends 'map/navbar.html' %}
 
-{% block banner %}
-  <!-- début du body, j'indique un conteneur, je donne au site un nom, cela pour préparer à une mise en forme css propre -->
-  <body>
-    <header class ="banner">
-        <h1>Chaloire</h1>
-    </header>
-{% endblock %}
     
 
 {% block content %}
 <!-- Contenu du site qui va apparaitre dans le conteneur et sous la barre des onglets --> 
+<body>
     <div id="contenu">
       <h2>Bienvenue sur le site du projet Chaloire !</h2>
       <p>Ce projet, en collaboration avec les archives Renumar, permet d'en apprendre plus sur les chalands de la Loire. Ici sont disponibles une carte interactive, un glossaire, des écris sur l'histoire des chalands et des liens utiles.</p>
@@ -20,5 +14,5 @@
 
     <p id="footer">L'équipe Chaloire vous souhaite une bonne visite !</p>
   </div>
-  </body>
+</body>
 {% endblock %}

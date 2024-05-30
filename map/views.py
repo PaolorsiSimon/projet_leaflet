@@ -7,10 +7,10 @@ from map.models import PointInteret, Itineraire, TypePointInteret, PointDansItin
 
 #AJOUTER LES VIEWS POUR LE FRONT
 def home(request):
-    return render(request, 'home.html')
+    return render(request, 'map/home.html')
 
 def doc(request):
-    return render(request, 'doc.html')
+    return render(request, 'map/doc.html')
 
 
 
