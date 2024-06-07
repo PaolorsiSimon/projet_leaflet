@@ -1,23 +1,35 @@
-from django.db import models
+from django.db import connection, models
 from django.contrib.gis.db import models
-from django.contrib.gis.geos import GEOSGeometry
+from django.contrib.gis.geos import GEOSGeometry, Point, LineString
 from shapely.wkt import loads
 
-import json
-from geojson import Feature, FeatureCollection, LineString, MultiLineString, Point
+
+
+
+
+class CoursDeau(models.Model):
+    gid = models.IntegerField()
+    cdentitehy = models.CharField(max_length=255, null=True)
+    nomentiteh = models.CharField(max_length=255, null=True)
+    candidat = models.CharField(max_length=255, null=True)
+    classe = models.IntegerField()
+    layer = models.CharField(max_length=255, null=True)
+    path = models.CharField(max_length=255, null=True)
+    geom = models.MultiLineStringField(srid=4326)
+
 
 
 class LoireModel(models.Model):
     gid = models.IntegerField()
-    cdentitehy = models.CharField(max_length=255)
-    nomentiteh = models.CharField(max_length=255)
+    cdentitehy = models.CharField(max_length=255, null=True)
+    nomentiteh = models.CharField(max_length=255, null=True)
     candidat = models.CharField(max_length=255, null=True)
     classe = models.IntegerField()
     geom = models.MultiLineStringField(srid=4326)
 
 
 
-#commentaire sur branche itineraires_modifs
+
 class PointInteret(models.Model):
 
     # Distinguer le nom unique, ajouter un help texte
@@ -51,10 +63,80 @@ class Itineraire(models.Model):
     class Meta:
         verbose_name_plural = "Itinéraires"
 
-    @property
-    def points_ordre(self):
-        return self.points.all().order_by('positionDansItineraire')
-    
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            # Définir les points de départ et d'arrivée
+
+            depart_point = Point(self.depart.point.x, self.depart.point.y, srid=4326)
+            arrivee_point = Point(self.arrivee.point.x, self.arrivee.point.y, srid=4326)
+
+            # Convertir les points en chaînes de caractères SQL valides
+            depart_point_sql = depart_point.ewkt
+            print(f'depart ekwt = {depart_point_sql}')
+            arrivee_point_sql = arrivee_point.ewkt
+            print(f'arrivee ekwt = {arrivee_point_sql}')
+
+            #pour changer vers ou pointe les requetes il faut changer map_loiremodel -> map_coursdeau
+            
+            with connection.cursor() as cursor:
+                cursor.execute("""
+                    SELECT
+                       ST_LineLocatePoint(line.geom, point)
+                    FROM
+                        (SELECT (ST_Dump(map_loiremodel.geom)).geom AS geom FROM map_loiremodel) AS line,
+                        (SELECT ST_GeomFromEWKT(%s) AS point) AS pt
+                """, [
+                    depart_point_sql,
+                ])
+                valeur_depart = cursor.fetchone()[0]
+                print(f'valeur de depart : {valeur_depart}')
+
+            
+            with connection.cursor() as cursor:
+                cursor.execute("""
+                    SELECT
+                       ST_LineLocatePoint(line.geom, point)
+                    FROM
+                        (SELECT (ST_Dump(map_loiremodel.geom)).geom AS geom FROM map_loiremodel) AS line,
+                        (SELECT ST_GeomFromEWKT(%s) AS point) AS pt
+                """, [
+                    arrivee_point_sql,
+                ])
+                valeur_arrivee = cursor.fetchone()[0]
+                print(f'valeur darrivee : {valeur_arrivee}')
+
+            if valeur_depart >= valeur_arrivee:
+                petit = depart_point_sql
+                grand = arrivee_point_sql
+            else:
+                petit = arrivee_point_sql
+                grand = depart_point_sql
+
+
+            #pour changer vers ou pointe les requetes il faut changer map_loiremodel -> map_loiremodel
+            with connection.cursor() as cursor:
+                cursor.execute("""
+                    SELECT
+                        ST_LineSubstring(line.geom, ST_LineLocatePoint(line.geom, grand), ST_LineLocatePoint(line.geom, petit))
+                    FROM
+                        (SELECT (ST_Dump(map_loiremodel.geom)).geom AS geom FROM map_loiremodel) AS line,
+                        (SELECT ST_GeomFromEWKT(%s) AS petit) AS pt,
+                        (SELECT ST_GeomFromEWKT(%s) AS grand) AS gr
+                """, [
+                    petit,
+                    grand,
+                ])
+
+                geometrie = cursor.fetchone()[0]
+
+
+                geom = GEOSGeometry(geometrie)
+                #print(f'geom : {geom}')
+                self.itineraire = geom
+
+
+
+        super(Itineraire, self).save(*args, **kwargs)
     
 
 

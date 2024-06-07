@@ -7,9 +7,11 @@ from .models import (
     Materiaux, Glossaire, Metier, Personnage, LienRenumar,
     PointDansGlossaire, ItineraireDansGlossaire, MetierDansGlossaire, 
     MateriauxDansPoint, MateriauxDansItineraire, PersonnageDansItineraire,
-    LienRenumarPointInteret, LienRenumarItineraire, LoireModel
+    LienRenumarPointInteret, LienRenumarItineraire, LoireModel, CoursDeau
 )
 
+class CoursDeauAdmin(LeafletGeoAdmin):
+    list_display=('gid',)
 
 class LoireModelAdmin(LeafletGeoAdmin):
     list_display = ('nomentiteh',)
@@ -59,6 +61,13 @@ class ItineraireAdmin(LeafletGeoAdmin):
     inlines = [PointDansItineraireInline, MateriauxDansItineraireInline, PersonnageDansItineraireInline, LienRenumarItineraireInline, ItineraireDansGlossaireInLine]
     list_display = ('depart', 'arrivee', 'commentaire')
 
+    exclude = ('itineraire',)
+
+    def get_readonly_fields(self, request, obj=None):
+        if obj:  # Modification d'un objet existant
+            return ['itineraire']
+        return []
+
 #####################################################################################
 
 class MetierDansGlossaireInLine(admin.TabularInline):
@@ -70,6 +79,8 @@ class MetierAdmin(admin.ModelAdmin):
     search_fields = ('nom',)
 
 admin.site.register(Metier, MetierAdmin)
+admin.site.register(CoursDeau, CoursDeauAdmin)
+
 admin.site.register(Itineraire, ItineraireAdmin)
 admin.site.register(LoireModel, LoireModelAdmin)
 
@@ -80,3 +91,8 @@ admin.site.register(Personnage)
 admin.site.register(TypePointInteret)
 admin.site.register(LienRenumar)
 admin.site.register(PointDansItineraire)
+
+
+
+
+

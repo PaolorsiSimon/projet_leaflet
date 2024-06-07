@@ -10,52 +10,51 @@ from map.models import PointInteret, Itineraire, TypePointInteret, PointDansItin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import LoireModel, Itineraire, PointInteret
-from .utils import decouper_itineraire
 
 
-def creer_itineraire(request):
-    if request.method == 'POST':
-        # Récupérer les données du formulaire
-        loire_gid = request.POST['loire_gid']
-        depart_pk = request.POST['depart_pk']
-        arrivee_pk = request.POST['arrivee_pk']
-        scenario = request.POST['scenario']
-        commentaire = request.POST.get('commentaire')
+# def creer_itineraire(request):
+#     if request.method == 'POST':
+#         # Récupérer les données du formulaire
+#         loire_gid = request.POST['loire_gid']
+#         depart_pk = request.POST['depart_pk']
+#         arrivee_pk = request.POST['arrivee_pk']
+#         scenario = request.POST['scenario']
+#         commentaire = request.POST.get('commentaire')
 
-        # Récupérer les objets LoireModel, PointInteret de départ et d'arrivée
-        loire_obj = get_object_or_404(LoireModel, gid=loire_gid)
-        depart_obj = get_object_or_404(PointInteret, pk=depart_pk)
-        arrivee_obj = get_object_or_404(PointInteret, pk=arrivee_pk)
+#         # Récupérer les objets LoireModel, PointInteret de départ et d'arrivée
+#         loire_obj = get_object_or_404(LoireModel, gid=loire_gid)
+#         depart_obj = get_object_or_404(PointInteret, pk=depart_pk)
+#         arrivee_obj = get_object_or_404(PointInteret, pk=arrivee_pk)
 
-        # Découper la géométrie dans LoireModel en fonction des points de départ et d'arrivée
-        itineraire_django = decouper_itineraire(loire_obj, depart_obj, arrivee_obj)
+#         # Découper la géométrie dans LoireModel en fonction des points de départ et d'arrivée
+#         itineraire_django = decouper_itineraire(loire_obj, depart_obj, arrivee_obj)
 
-        # Créer un nouvel objet Itineraire
-        nouvel_itineraire = Itineraire.objects.create(
-            itineraire=itineraire_django,
-            scenario=scenario,
-            commentaire=commentaire,
-            depart=depart_obj,
-            arrivee=arrivee_obj,
-            loire_gid=loire_obj.gid,
-        )
+#         # Créer un nouvel objet Itineraire
+#         nouvel_itineraire = Itineraire.objects.create(
+#             itineraire=itineraire_django,
+#             scenario=scenario,
+#             commentaire=commentaire,
+#             depart=depart_obj,
+#             arrivee=arrivee_obj,
+#             loire_gid=loire_obj.gid,
+#         )
 
-        # Ajouter un message de succès
-        messages.success(request, 'L\'itinéraire a été créé avec succès.')
+#         # Ajouter un message de succès
+#         messages.success(request, 'L\'itinéraire a été créé avec succès.')
 
-        # Rediriger vers la page de détail de l'itinéraire
-        return redirect('itineraire_detail', pk=nouvel_itineraire.pk)
+#         # Rediriger vers la page de détail de l'itinéraire
+#         return redirect('itineraire_detail', pk=nouvel_itineraire.pk)
 
-    else:
-        # Récupérer la liste des objets LoireModel et PointInteret pour afficher dans le formulaire
-        loire_models = LoireModel.objects.all()
-        point_interets = PointInteret.objects.all()
+#     else:
+#         # Récupérer la liste des objets LoireModel et PointInteret pour afficher dans le formulaire
+#         loire_models = LoireModel.objects.all()
+#         point_interets = PointInteret.objects.all()
 
-        # Rendre le formulaire de création d'itinéraire
-        return render(request, 'creer_itineraire.html', {
-            'loire_models': loire_models,
-            'point_interets': point_interets,
-        })
+#         # Rendre le formulaire de création d'itinéraire
+#         return render(request, 'creer_itineraire.html', {
+#             'loire_models': loire_models,
+#             'point_interets': point_interets,
+#         })
 
 
 
