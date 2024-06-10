@@ -3,8 +3,6 @@ from django.contrib.gis.db import models
 from django.contrib.gis.geos import GEOSGeometry
 from django.core.exceptions import ValidationError
 
-##test
-
 
 class PointInteret(models.Model):
     # Distinguer le nom unique, ajouter un help texte
@@ -217,22 +215,6 @@ class PointDansItineraire(models.Model):
     
     def __str__(self):
         return f"{self.fk_pointInteret} à la position {self.positionDansItineraire} dans {self.fk_itineraire}"
-
-
-
-class MateriauxDansPoint(models.Model):
-    fk_materiaux = models.ForeignKey('Materiaux', models.CASCADE)
-    fk_pointInteret = models.ForeignKey('PointInteret', models.CASCADE)
-
-    def __str__(self):
-        return f'{self.fk_pointInteret}/{self.fk_materiaux}'
-
-    class Meta :
-        verbose_name_plural = 'points/materiaux'
-        verbose_name = 'point/materiaux'
-        constraints=[
-            models.UniqueConstraint(fields=['fk_pointInteret','fk_materiaux'], name='unique_materiauxDansPoint')
-        ]
 
 
 

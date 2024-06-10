@@ -5,7 +5,7 @@ from .models import (
     PointInteret, Itineraire, PointDansItineraire, TypePointInteret, 
     Materiaux, Glossaire, Metier, Personnage, LienRenumar,
     PointDansGlossaire, ItineraireDansGlossaire, MetierDansGlossaire, 
-    MateriauxDansPoint, MateriauxDansItineraire, PersonnageDansItineraire,
+    MateriauxDansItineraire, PersonnageDansItineraire,
     LienRenumarPointInteret, LienRenumarItineraire
 )
 
@@ -14,16 +14,14 @@ class LienRenumarPointInteretInLine(admin.TabularInline):
     model = LienRenumarPointInteret
     extra = 1
 
-class MateriauxDansPointInLine(admin.TabularInline):
-    model = MateriauxDansPoint
-    extra = 1
-
 class PointDansGlossaireInLine(admin.TabularInline):
     model = PointDansGlossaire
     extra = 1
 
 class PointInteretAdmin(LeafletGeoAdmin):
-    inlines = [MateriauxDansPointInLine, LienRenumarPointInteretInLine, PointDansGlossaireInLine]
+    inlines = [LienRenumarPointInteretInLine, PointDansGlossaireInLine]
+    search_fields = ('nom', 'presentation')
+    list_filter = ('type_point_interet',)
 
 #pour itinéraire
 class ItineraireDansGlossaireInLine(admin.TabularInline):
@@ -59,6 +57,32 @@ class MetierDansGlossaireInLine(admin.TabularInline):
 class MetierAdmin(admin.ModelAdmin):
     inlines = [MetierDansGlossaireInLine]
     search_fields = ('nom',)
+    list_filter = ()
+
+# pour glossaire
+class GlossaireAdmin(admin.ModelAdmin):
+    search_fields = ('mot', 'definition')
+    list_filter = ()
+
+# pour materiaux
+class MateriauxAdmin(admin.ModelAdmin):
+    search_fields = ('nom',)
+    list_filter = ()
+
+# pour personnage
+class PersonnageAdmin(admin.ModelAdmin):
+    search_fields = ('nom', 'prenom')
+    list_filter = ('metiers_personnage',)
+
+# pour type de point d'intérêt
+class TypePointInteretAdmin(admin.ModelAdmin):
+    search_fields = ('type',)
+    list_filter = ()
+
+# pour lien renumar
+class LienRenumarAdmin(admin.ModelAdmin):
+    search_fields = ('titre', 'commentaire')
+    list_filter = ()
 
 admin.site.register(Metier, MetierAdmin)
 admin.site.register(Itineraire, ItineraireAdmin)
