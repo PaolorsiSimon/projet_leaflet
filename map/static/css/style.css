@@ -50,6 +50,12 @@ body {
   display: block;
 }
 
+.navbar ul li a:hover {
+  color: #CFC197;
+  text-decoration: none;
+  display: block;
+}
+
 /* Style du choix quadrillé des sujets de lecture de la documentation A REVOIR */
 .grid-container {
   /* display: flex;*/
@@ -98,12 +104,12 @@ body {
 #map {
   height: 800px;
   width: 100%;
-  border : #2A8387 5px, solid;
+  border : #2A8387 3px, solid;
   border-radius: 5px;
 }
 
 #info {
-  font-size: 1.2em;
+  
   font-family: Arial, sans-serif;
   color:black;
   margin-bottom: 10px;
@@ -112,8 +118,8 @@ body {
 }
 
 #info h4 {
-  font-size: 1.5em;
-  font-family: Arial, sans-serif;
+  
+  font-family: Luminari, fantasy;
   text-decoration: underline;
   color:black;
   margin-bottom: 10px;
