@@ -2,17 +2,35 @@
 {% load static %} {% load leaflet_tags %}
 
 
-{% block content %}
-<h3>Ma Map</h3>
-    <br />
 
-    <div class="grid-container">
-      <div id="map"></div>
+{% block content %}
+{% leaflet_js %} {% leaflet_css %}
+<body>
+    <h3>Carte Chaloire</h3>
+      <p> Ici, il est possible de visualiser de véritables itineraires de transport en chalands. Les informations indiquées ici proviennent d'archives notariales partagées par l'equipe Renumar.</p>
+       <br />
+    
+    <div class="grid-container2">
+      
+      <div id="map">
+
+
+      </div>
+
+      
 
       <div id="info">
 
+
+
       </div>
     </div>
+
+    <p>Cette carte permet de cliquer sur un point d'intérét pour afficher ses informations. Il est également possible d'afficher une carte ancienne : la carte de Cassini. Celle-ci a été commencée au XVIIIe siècle par la famille Cassini, le but étant d'avoir une carte complète des territoires du royaume de France de l'époque.</p>
+    <p>Avoir accès à la version de Cassini de la carte permet de comprendre l'évolution de la Loire au fil des siècles. Il est par exemple possible de constater la disparition de certains bras de la Loire dont un qui, s'il était encore présent, traverserait le quartier des Halles de la ville de Tours.</p>
+    <p>Le lien vers la carte de Cassini se trouve dans l'onglet liens utiles.</p>
+
+    <p id="footer">L'équipe Chaloire vous souhaite une bonne navigation !</p>
 
     <script type="text/javascript">
       var PointInteretDataUrl = "{% url 'map:pointsInteret_data' %}";
@@ -25,6 +43,6 @@
       type="text/javascript"
       src="{% static '/js/load_data.js' %}"
     ></script>
-
-
+  
+</body>
 {% endblock %}

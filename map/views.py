@@ -1,44 +1,49 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import TemplateView
-
 from django.core.serializers import serialize
 from map.models import Glossaire, PointInteret, Itineraire, TypePointInteret, PointDansItineraire
+##Import pour le formulaire de recherche du glossaire##
+
 
 #AJOUTER LES VIEWS POUR LE FRONT
 def home(request):
     return render(request, 'map/home.html')
-
-def doc(request):
-    return render(request, 'map/doc.html')
-
-
-#VERIFIER LA VUE CI DESSOUS
 def glossaire(request):
-    from map.forms import FormulaireRecherche
-
-    resultat = Glossaire.objects.all()
-
-    if request.method == 'POST' :
-        Glossaire = FormulaireRecherche (request.POST)
-        if request.POST.get('Metier'):
-                param_type = request.POST.get('Metier')
-                resultats = resultats.filter (fk_type=param_type)
-        if request.POST.get('Personnage'):
-                param_type = request.POST.get('Personnage')
-                resultats = resultats.filter (fk_type=param_type)
-        if request.POST.get('Materiaux'):
-                param_type = request.POST.get('Materiaux')
-                resultats = resultats.filter (fk_type=param_type)
     
-    else : Glossaire = FormulaireRecherche() 
+    ##Début ajout formulaire V2
+    from .forms import FormulaireRecherche
+    from .models import Glossaire
+    
+    resultat = None
+    non_trouve = False
 
-    context = {
-        'resultats' : resultats,
-        'formulaire' : Glossaire
-    }
+    if request.method == 'POST':
+        form = FormulaireRecherche(request.POST)
+        if form.is_valid():
+            mot = form.cleaned_data['mot']
+            try:
+                resultat = Glossaire.objects.get(mot__iexact=mot)
+            except Glossaire.DoesNotExist:
+                non_trouve = True
+    else:
+        form = FormulaireRecherche()
 
-    return render(request, 'map/glossaire.html',context)
+    return render(request, 'map/glossaire.html', {'form': form, 'resultat': resultat, 'non_trouve': non_trouve})
+
+    ##Fin ajout formulaire V2"""
+    
+    #glossaire = Glossaire.objects.all()
+    #context = {'glossaire': glossaire,}
+    #return render (request, 'map/glossaire.html', context)
+
+
+
+def liens(request):
+    return render(request, 'map/liens.html')
+
+def contacts(request):
+    return render(request, 'map/contacts.html')
 
 
 
@@ -57,5 +62,3 @@ def itineraires_dataset(request):
 def type_point_dataset(request):
     type = serialize('json', TypePointInteret.objects.all())
     return HttpResponse(type, content_type='json')
-# Create your views here.
-

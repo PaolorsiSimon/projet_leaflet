@@ -13,8 +13,13 @@ urlpatterns = [
     path('typePoints_data/', views.type_point_dataset, name='typePoints_data'),
 #AJOUT POUR FRONT CI DESSOUS
     path('', views.home, name='home'),
-    path('doc/', views.doc, name='doc'),
     path('glossaire/', views.glossaire, name='glossaire'),
+    path('liens/', views.liens, name='liens'),
+    path('contacts/', views.contacts, name='contacts'),
+
+    
+    #path('glossaire/', views.FormulaireRecherche, name='FormulaireRecherche'), --> AJOUT FORMULAIRE NON CONLCUANT
+
 
 
 

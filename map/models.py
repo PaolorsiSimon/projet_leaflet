@@ -2,8 +2,6 @@ from django.db import models
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import GEOSGeometry
 
-##test
-#commentaire de salomé
 
 class PointInteret(models.Model):
     # Distinguer le nom unique, ajouter un help texte
@@ -153,7 +151,7 @@ class LienRenumar(models.Model):
 
 ### les liens vers le glossaire 
 class PointDansGlossaire(models.Model):
-    #ajouter un help text pour bien prevnir qu'un mot de glossaire n'est ajouter que si il appartient a la presentation de point d'interet
+    #ajouter un help text pour bien prevenir qu'un mot de glossaire n'est ajouter que si il appartient a la presentation de point d'interet
     fk_pointInteret = models.ForeignKey('PointInteret', models.CASCADE)
     fk_glossaire = models.ForeignKey('Glossaire', models.CASCADE)
 

@@ -13,14 +13,15 @@ body {
   height: 95%; /* Rajout de ce qu'il y avait déjà */
 }
 
+
 /* Style bannière */
 .banner {
   background: linear-gradient(90deg, #3BA3A3, #2A8387, #1B4B4B);
   color: white;
   padding: 10px 0;
   text-align: center;
-  font-family :fantasy;
-  font-size: large;
+  font-family :Luminari, fantasy;
+  font-size: larger;
 }
 
 /* Barre de navigation latérale */
@@ -49,27 +50,31 @@ body {
   display: block;
 }
 
-/* Contenu principal */
-.content {
-  margin-left: 220px;
-  padding: 20px;
+/* Style du choix quadrillé des sujets de lecture de la documentation A REVOIR */
+.grid-container {
+  /* display: flex;*/
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(550px, 1fr));
+  gap: 20px;
+  margin: 50px;
 }
 
-/* Style du choix quadrillé des sujets de lecture de la documentation A REVOIR */
-
-.grid-container {
+/* AJOUT GRID-CONTAINER CARTE */
+.grid-container2 {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 20px;
+  grid-template-columns: 70% auto; /* 70% pour la carte, auto pour les informations du point sélectionné */
+  height : 100%;
+  grid-gap: 20px; /* Espace entre les colonnes */
 }
 
 /* Style du contenu de la grille */
 .grid-item {
   background-color: #308484;
   padding: 20px;
-  border: 1px solid #3BA3A3;
+  border: 2px solid #3BA3A3;
   border-radius: 5px;
 }
+
 
 .grid-item h2 {
   font-size: 1.5em;
@@ -86,3 +91,82 @@ body {
   margin-bottom: 10px;
   text-align: left;
 }
+
+
+/* AJOUT ELEMENTS STYLE CARTE */
+
+#map {
+  height: 800px;
+  width: 100%;
+  border : #2A8387 5px, solid;
+  border-radius: 5px;
+}
+
+#info {
+  font-size: 1.2em;
+  font-family: Arial, sans-serif;
+  color:black;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  text-align: left;
+}
+
+#info h4 {
+  font-size: 1.5em;
+  font-family: Arial, sans-serif;
+  text-decoration: underline;
+  color:black;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+
+/* Ajout effet couleur hover sur les liens */
+a {
+  color:#CFD8DC;
+  text-decoration: none;
+}
+a:hover {
+  color : #CFC197;
+}
+
+/* AJOUT SECTIONS HOME */
+.section1 {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+  align-items: center;
+  
+}
+
+.section2 {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 20px;
+  margin-bottom: 20px;
+  align-items: center;
+ 
+}
+
+/* AJOUT CONTAINERS HOME */
+.img-container {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border: #2A8387 5px, solid;
+  border-radius: 5px;
+  }
+
+.text-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: justify;
+}
+
+.text-container p {
+  margin: 0;
+  width: 100%;
+}
+
