@@ -5,7 +5,27 @@ from shapely.wkt import loads
 from django.core.exceptions import ValidationError
 
 ##test
-#commentaire de salomé
+class CoursDeau(models.Model):
+    gid = models.IntegerField()
+    cdentitehy = models.CharField(max_length=255, null=True)
+    nomentiteh = models.CharField(max_length=255, null=True)
+    candidat = models.CharField(max_length=255, null=True)
+    classe = models.IntegerField()
+    layer = models.CharField(max_length=255, null=True)
+    path = models.CharField(max_length=255, null=True)
+    geom = models.MultiLineStringField(srid=4326)
+
+
+
+class LoireModel(models.Model):
+    gid = models.IntegerField()
+    cdentitehy = models.CharField(max_length=255, null=True)
+    nomentiteh = models.CharField(max_length=255, null=True)
+    candidat = models.CharField(max_length=255, null=True)
+    classe = models.IntegerField()
+    geom = models.MultiLineStringField(srid=4326)
+
+
 
 class PointInteret(models.Model):
 
@@ -33,7 +53,7 @@ class PointInteret(models.Model):
 class Itineraire(models.Model):
     itineraire = models.LineStringField()
     scenario = models.TextField()
-    commentaire = models.TextField(help_text="Commentaire sur l'itinéraire", null=True, blanck=True)
+    commentaire = models.TextField(help_text="Commentaire sur l'itinéraire", null=True, blank=True)
     depart = models.ForeignKey(PointInteret, on_delete=models.SET_NULL, null=True, related_name='depart_itineraires')
     arrivee = models.ForeignKey(PointInteret, on_delete=models.SET_NULL, null=True, related_name='arrivee_itineraires')
 
