@@ -61,3 +61,59 @@ def liens(request):
 def contacts(request):
     return render(request, 'map/contacts.html')
 
+
+
+def itineraires_dataset(request):
+    # Récupérer tous les itinéraires
+    itineraires = Itineraire.objects.all()
+
+    # Générer les données GeoJSON
+    features = []
+    for itineraire in itineraires:
+        # Générer la géométrie de l'itinéraire
+        geometry = {
+            "type": "LineString",
+            "coordinates": list(itineraire.itineraire.coords),
+        }
+
+        # Générer les propriétés de l'itinéraire
+        properties = {
+            "scenario": itineraire.scenario,
+            "commentaire": itineraire.commentaire,
+            "depart": {
+                "id": itineraire.depart_id,
+                "nom": itineraire.depart.nom,
+            },
+            "arrivee": {
+                "id": itineraire.arrivee_id,
+                "nom": itineraire.arrivee.nom,
+            },
+        }
+
+        # Générer la feature de l'itinéraire
+        feature = {
+            "type": "Feature",
+            "id": itineraire.id,
+            "properties": properties,
+            "geometry": geometry,
+        }
+
+        # Ajouter la feature de l'itinéraire à la liste des features
+        features.append(feature)
+
+    # Générer la collection de features
+    collection = {
+        "type": "FeatureCollection",
+        "crs": {
+            "type": "name",
+            "properties": {"name": "EPSG:4326"},
+        },
+        "features": features,
+    }
+
+    # Renvoie les données GeoJSON au format JSON
+    return JsonResponse(
+        collection,
+        encoder=DjangoJSONEncoder,
+        safe=False,
+    )

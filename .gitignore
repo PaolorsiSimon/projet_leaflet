@@ -1,5 +1,7 @@
 *.pyc
 __pycache__/
+map/__pycache__/
+
 *.pyo
 *.pyd
 .Python
