@@ -225,6 +225,7 @@ class Metier(models.Model):
         super().clean() #ici pour checker en lower
 
         self.nom = self.nom.lower()
+        
     def __str__(self):
         return self.nom
 
