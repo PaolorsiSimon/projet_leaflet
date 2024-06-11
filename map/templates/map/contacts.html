@@ -1,0 +1,44 @@
+<!--Je prend pour base d'affichage base.html avec la balise extends-->
+{% extends 'map/navbar.html' %}
+
+    
+
+{% block content %}
+<!-- Contenu du site qui va apparaitre dans le conteneur et sous la barre des onglets --> 
+<body>
+    
+
+    <h2>Nous contacter</h2>
+    <p>Vous pouvez nous contacter en cas de problème technique, de suggestions ou de questions.</p>
+    
+
+    <div class="grid-container">
+        <!--Première suggestion de contact--> 
+            <div class="grid-item">
+        
+                <H2>Contacter l'Équipe Renumar</H2>
+                <p>Si vous avez des questions concernant les archives ou si vous souhaitez mener un projet de recherche, vous pouvez contacter l'equipe Renumar : </p>
+                    <a href="https://renumar.univ-tours.fr/contact/">Contacter l'équipe Renumar</a>
+            
+            </div>
+
+        <!--Seconde suggestion de contact--> 
+            <div class="grid-item">
+        
+                <H2>Contacter l'Équipe Chaloire</H2>
+                <p>Si vous souhaitez obtenir un support technique, vous pouvez contacter l'equipe Chaloire : </p>
+                    <ul>
+                        <li><p>Riault Salomé: salome.riault@etu.univ-tours.fr</p></li>
+                        <li><p> Soubeste Katia : katia.soubeste@etu.univ-tours.fr</p></li>
+                        <li><p> Paolorsi Simon: simon.paolorsi@etu.univ-tours.fr</p></li>
+                    </ul>
+            
+            
+            </div>
+
+
+
+    </div>
+
+</body>
+{% endblock %}

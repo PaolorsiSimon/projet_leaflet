@@ -83,7 +83,7 @@ DATABASES = {
         "ENGINE": "django.contrib.gis.db.backends.postgis",
         "HOST": "localhost",
         "NAME": "projet_leaflet",
-        "PASSWORD": "liloueve27",
+        "PASSWORD": "admin",
         "USER": "postgres",
     }
 }
@@ -133,12 +133,13 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-GDAL_LIBRARY_PATH="C:/OSGeo4W/bin/gdal308.dll"
-PROJ_PATH="C:/OSGeo4W/share/proj/proj.db"
+#GDAL_LIBRARY_PATH="C:/OSGeo4W/bin/gdal308.dll"
+#PROJ_PATH="C:/OSGeo4W/share/proj/proj.db"
 
 LEAFLET_CONFIG = {
     'DEFAULT_CENTER': (47.399452334950986, 0.6850264790425225),
     'DEFAULT_ZOOM': 11,
     'EPSG': 4326,
+    'RESET_VIEW': True,
 
 }

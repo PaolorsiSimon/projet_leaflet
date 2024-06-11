@@ -1,0 +1,38 @@
+<!--Je prend pour base d'affichage base.html (navbar (ERREUR A REVOIR)) avec la balise extends-->
+{% extends 'map/navbar.html' %}
+
+    
+
+{% block content %}
+<!-- Contenu du site qui va apparaitre dans le conteneur et sous la barre des onglets --> 
+    
+      <h2>Glossaire</h2>
+      
+      <h3>Quel est le mot à rechercher ?</h3>
+      
+      <!-- PARTIE CI DESSOUS A VERIFIER-->
+<body>
+    
+   <!--AJOUT VERSION V2 GLOSSAIRE-->
+  
+ 
+   <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Rechercher</button>
+</form>
+
+{% if resultat %}
+    <h2>Résultat trouvé:</h2>
+    <p><strong>{{ resultat.mot }}</strong>: {{ resultat.definition }}</p>
+{% elif non_trouve %}
+    <h2>Mot non trouvé</h2>
+    <p>Le mot que vous avez recherché n'existe pas dans le glossaire.</p>
+{% endif %}
+    
+
+    
+
+
+</body>
+{% endblock %}

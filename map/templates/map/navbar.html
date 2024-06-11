@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+{% load static %}
+{% load leaflet_tags %}
+<html lang="en">
+
+
+<!-- Head du site : j'y indique les auteurs, le css à lier, le titre du site -->  
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="Equipe Chalands"/>
+
+<!-- Indication lien css des pages du site -->
+   
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+   
+<!-- Importer Leaflet CSS et JS -->
+    {% leaflet_js %} {% leaflet_css %}
+    
+    <title> Chaloire </title>
+  </head>
+ 
+ <!-- banière de navigation du site + titre page -->
+<body>
+
+
+  <header class ="banner">
+  
+    <h1 id="titreSite">Chaloire</h1>
+
+  </header>
+
+
+  <div class ="navbar">
+  
+    <nav>
+      
+      <ul id="navigation">
+        
+        <li><a href="{% url 'map:home' %}">Page d'accueil</a></li>
+        <li><a href="{% url 'map:map' %}">La carte</a></li>
+        <li><a href="{% url 'map:glossaire' %}">Glossaire</a></li>
+        <li><a href="{% url 'map:liens' %}">Liens utiles</a></li>
+        <li><a href="{% url 'map:contacts' %}">Nous contacter</a></li>
+      
+      </ul>
+  
+    </nav>
+
+  </div>
+
+  <!-- Contenu du site qui va apparaitre dans le body -->
+
+  <div class="container" style="height:80%; width: 95%; margin: auto;">
+  
+    {% block content %}
+      <!-- Le contenu spécifique à chaque page sera inséré ici -->
+    {% endblock %}
+
+  </div>
+  </body>
+</html>
