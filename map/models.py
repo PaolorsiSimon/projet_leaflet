@@ -113,7 +113,7 @@ class Itineraire(models.Model):
                 grand = depart_point_sql
 
 
-            #pour changer vers ou pointe les requetes il faut changer map_loiremodel -> map_loiremodel
+            #pour changer vers ou pointe les requetes il faut changer map_loiremodel -> map_coursdeau
             with connection.cursor() as cursor:
                 cursor.execute("""
                     SELECT
