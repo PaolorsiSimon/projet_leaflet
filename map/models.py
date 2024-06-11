@@ -1,10 +1,14 @@
-from django.db import models
+from django.db import connection, models
 from django.contrib.gis.db import models
-from django.contrib.gis.geos import GEOSGeometry
+from django.contrib.gis.geos import GEOSGeometry, Point, LineString
+from shapely.wkt import loads
 from django.core.exceptions import ValidationError
 
+##test
+#commentaire de salomé
 
 class PointInteret(models.Model):
+
     # Distinguer le nom unique, ajouter un help texte
     nom = models.CharField(
         max_length=255,
@@ -25,29 +29,116 @@ class PointInteret(models.Model):
     class Meta:
         verbose_name_plural = "Points d'intérêt"
 
+
 class Itineraire(models.Model):
     itineraire = models.LineStringField()
     scenario = models.TextField()
-    commentaire = models.TextField(help_text="Commentaire sur l'itinéraire", null=True, blank=True)
-#mettre commentaire pas obligatoire
+    commentaire = models.TextField(help_text="Commentaire sur l'itinéraire", null=True, blanck=True)
+    depart = models.ForeignKey(PointInteret, on_delete=models.SET_NULL, null=True, related_name='depart_itineraires')
+    arrivee = models.ForeignKey(PointInteret, on_delete=models.SET_NULL, null=True, related_name='arrivee_itineraires')
+
 
     class Meta:
         verbose_name_plural = "Itinéraires"
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            # Définir les points de départ et d'arrivée
+
+            depart_point = Point(self.depart.point.x, self.depart.point.y, srid=4326)
+            arrivee_point = Point(self.arrivee.point.x, self.arrivee.point.y, srid=4326)
+
+            # Convertir les points en chaînes de caractères SQL valides
+            depart_point_sql = depart_point.ewkt
+            print(f'depart ekwt = {depart_point_sql}')
+            arrivee_point_sql = arrivee_point.ewkt
+            print(f'arrivee ekwt = {arrivee_point_sql}')
+
+            #pour changer vers ou pointe les requetes il faut changer map_loiremodel -> map_coursdeau
+            
+            with connection.cursor() as cursor:
+                cursor.execute("""
+                    SELECT
+                       ST_LineLocatePoint(line.geom, point)
+                    FROM
+                        (SELECT (ST_Dump(map_loiremodel.geom)).geom AS geom FROM map_loiremodel) AS line,
+                        (SELECT ST_GeomFromEWKT(%s) AS point) AS pt
+                """, [
+                    depart_point_sql,
+                ])
+                valeur_depart = cursor.fetchone()[0]
+                print(f'valeur de depart : {valeur_depart}')
+
+            
+            with connection.cursor() as cursor:
+                cursor.execute("""
+                    SELECT
+                       ST_LineLocatePoint(line.geom, point)
+                    FROM
+                        (SELECT (ST_Dump(map_loiremodel.geom)).geom AS geom FROM map_loiremodel) AS line,
+                        (SELECT ST_GeomFromEWKT(%s) AS point) AS pt
+                """, [
+                    arrivee_point_sql,
+                ])
+                valeur_arrivee = cursor.fetchone()[0]
+                print(f'valeur darrivee : {valeur_arrivee}')
+
+            if valeur_depart >= valeur_arrivee:
+                petit = depart_point_sql
+                grand = arrivee_point_sql
+            else:
+                petit = arrivee_point_sql
+                grand = depart_point_sql
+
+
+            #pour changer vers ou pointe les requetes il faut changer map_loiremodel -> map_coursdeau
+            with connection.cursor() as cursor:
+                cursor.execute("""
+                    SELECT
+                        ST_LineSubstring(line.geom, ST_LineLocatePoint(line.geom, grand), ST_LineLocatePoint(line.geom, petit))
+                    FROM
+                        (SELECT (ST_Dump(map_loiremodel.geom)).geom AS geom FROM map_loiremodel) AS line,
+                        (SELECT ST_GeomFromEWKT(%s) AS petit) AS pt,
+                        (SELECT ST_GeomFromEWKT(%s) AS grand) AS gr
+                """, [
+                    petit,
+                    grand,
+                ])
+
+                geometrie = cursor.fetchone()[0]
+
+
+                geom = GEOSGeometry(geometrie)
+                #print(f'geom : {geom}')
+                self.itineraire = geom
+
+
+
+        super(Itineraire, self).save(*args, **kwargs)
     
-    #passer par la table intermediare pour les points
-    @property
-    def depart(self):
-        first_point = self.points_ordre.first()
-        return first_point.fk_pointInteret.nom if first_point else None
 
-    @property
-    def arrivee(self):
-        last_point = self.points_ordre.last()
-        return last_point.fk_pointInteret.nom if last_point else None
 
-    @property
-    def points_ordre(self):
-        return self.points.all().order_by('positionDansItineraire')
+
+
+class PointDansItineraire(models.Model):
+    fk_pointInteret = models.ForeignKey('PointInteret', models.CASCADE)
+    fk_itineraire = models.ForeignKey('Itineraire', models.CASCADE, related_name="points")
+    positionDansItineraire = models.IntegerField()
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['fk_pointInteret', 'fk_itineraire',], name='unique_pointDansItineraire'),
+            models.UniqueConstraint(fields=['fk_itineraire', 'positionDansItineraire'], name='unique_positionDansItineraire')
+
+        ]
+        ordering = ['positionDansItineraire']
+
+    def __str__(self):
+        return f"{self.fk_pointInteret} à la position {self.positionDansItineraire} dans {self.fk_itineraire}"
+
+
+
+
 
 
 # ---------- ICI TOUTE LES CLASSES PRINCIPALES -----------
@@ -113,6 +204,7 @@ class Metier(models.Model):
         super().clean() #ici pour checker en lower
 
         self.nom = self.nom.lower()
+        
     def __str__(self):
         return self.nom
 
@@ -200,21 +292,37 @@ class MetierDansGlossaire(models.Model):
 
 ##liens vers point et itineraire
 
-class PointDansItineraire(models.Model):
-    fk_pointInteret = models.ForeignKey('PointInteret', models.CASCADE)
-    fk_itineraire = models.ForeignKey('Itineraire', models.CASCADE, related_name="points")
-    positionDansItineraire = models.IntegerField()
+# class PointDansItineraire(models.Model):
+#     fk_pointInteret = models.ForeignKey('PointInteret', models.CASCADE)
+#     fk_itineraire = models.ForeignKey('Itineraire', models.CASCADE, related_name="points")
+#     positionDansItineraire = models.IntegerField()
 
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=['fk_pointInteret', 'fk_itineraire',], name='unique_pointDansItineraire'),
-            models.UniqueConstraint(fields=['fk_itineraire', 'positionDansItineraire'], name='unique_positionDansItineraire')
+#     class Meta:
+#         constraints = [
+#             models.UniqueConstraint(fields=['fk_pointInteret', 'fk_itineraire',], name='unique_pointDansItineraire'),
+#             models.UniqueConstraint(fields=['fk_itineraire', 'positionDansItineraire'], name='unique_positionDansItineraire')
 
-        ]
-        ordering = ['positionDansItineraire']
+#         ]
+#         ordering = ['positionDansItineraire']
     
+#     def __str__(self):
+#         return f"{self.fk_pointInteret} à la position {self.positionDansItineraire} dans {self.fk_itineraire}"
+
+
+
+class MateriauxDansPoint(models.Model):
+    fk_materiaux = models.ForeignKey('Materiaux', models.CASCADE)
+    fk_pointInteret = models.ForeignKey('PointInteret', models.CASCADE)
+
     def __str__(self):
-        return f"{self.fk_pointInteret} à la position {self.positionDansItineraire} dans {self.fk_itineraire}"
+        return f'{self.fk_pointInteret}/{self.fk_materiaux}'
+
+    class Meta :
+        verbose_name_plural = 'points/materiaux'
+        verbose_name = 'point/materiaux'
+        constraints=[
+            models.UniqueConstraint(fields=['fk_pointInteret','fk_materiaux'], name='unique_materiauxDansPoint')
+        ]
 
 
 

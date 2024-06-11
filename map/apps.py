@@ -9,3 +9,4 @@ class PointsInteret(AppConfig):
 class Itineraires(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'itineraires'
+

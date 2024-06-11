@@ -1,9 +1,25 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import TemplateView
+from django.contrib.gis.geos import GEOSGeometry
+from django.core.serializers.json import DjangoJSONEncoder
+from django.http import JsonResponse
+
 from django.core.serializers import serialize
 from map.models import Glossaire, PointInteret, Itineraire, TypePointInteret, PointDansItineraire
-##Import pour le formulaire de recherche du glossaire##
+
+class MapPageView(TemplateView):
+    template_name= 'map/map.html'
+
+def pointsInteret_dataset(request):
+    pointsInteret = serialize('geojson', PointInteret.objects.all())
+    return HttpResponse(pointsInteret, content_type='json')
+
+
+def type_point_dataset(request):
+    type = serialize('json', TypePointInteret.objects.all())
+    return HttpResponse(type, content_type='json')
+# Create your views here.
 
 
 #AJOUTER LES VIEWS POUR LE FRONT
@@ -45,20 +61,3 @@ def liens(request):
 def contacts(request):
     return render(request, 'map/contacts.html')
 
-
-
-
-class MapPageView(TemplateView):
-    template_name= 'map/map.html'
-
-def pointsInteret_dataset(request):
-    pointsInteret = serialize('geojson', PointInteret.objects.all())
-    return HttpResponse(pointsInteret, content_type='json')
-
-def itineraires_dataset(request):
-    itineraires = serialize('geojson', Itineraire.objects.all())
-    return HttpResponse(itineraires, content_type='json')
-
-def type_point_dataset(request):
-    type = serialize('json', TypePointInteret.objects.all())
-    return HttpResponse(type, content_type='json')
