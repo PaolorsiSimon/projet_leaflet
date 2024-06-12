@@ -1,0 +1,80 @@
+#!/bin/sh
+CONFIG_LIBS="-LIBPATH:C:/src/osgeo4w/src/gdal/osgeo4w/install/apps/gdal/lib gdal308"
+CONFIG_DEP_LIBS="C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/iconv.dll.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/charset.dll.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/libssl.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/libcrypto.lib crypt32 C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/lz4.lib wbemuuid C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/liblzma.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/OpenCL.lib ws2_32 C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/Lerc.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/zstd.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/jpeg.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/poppler.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/libpng16.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/netcdf.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/hdf5_hl.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/hdf5.lib C:/src/osgeo4w/src/netcdf/osgeo4w/osgeo4w/lib/zlib.lib C:/src/osgeo4w/src/netcdf/osgeo4w/osgeo4w/lib/zstd.lib C:/src/osgeo4w/src/netcdf/osgeo4w/osgeo4w/lib/libcurl.lib C:/src/osgeo4w/src/netcdf/osgeo4w/osgeo4w/lib/libxml2.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/libwebp.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/hdf.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/mfhdf.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/szip.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/openjp2.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/jxl.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/jxl_threads.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/kmlbase.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/kmldom.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/kmlengine.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/minizip.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/uriparser.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/zlib.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/spatialite_i.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/sqlite3_i.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/xerces-c_3.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/libmysql.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/libpq.lib "C:/Program Files (x86)/Windows Kits/10/Lib/10.0.22621.0/um/x64/odbccp32.lib" "C:/Program Files (x86)/Windows Kits/10/Lib/10.0.22621.0/um/x64/WS2_32.Lib" legacy_stdio_definitions.lib odbccp32.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/freexl_i.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/arrow_dataset.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/parquet.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/arrow_acero.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/arrow.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/ogdi.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/libexpat.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/libxml2.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/geos_c.lib C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/libcurl.lib psapi C:/src/osgeo4w/src/gdal/osgeo4w/osgeo4w/lib/proj.lib"
+CONFIG_PREFIX="C:/src/osgeo4w/src/gdal/osgeo4w/install/apps/gdal"
+CONFIG_CFLAGS="-IC:/src/osgeo4w/src/gdal/osgeo4w/install/apps/gdal/include"
+CONFIG_DATA="C:/src/osgeo4w/src/gdal/osgeo4w/install/apps/gdal/share/gdal"
+CONFIG_VERSION="3.8.5"
+CONFIG_GNM_ENABLED=yes
+CONFIG_FORMATS="JPEG raw GTIFF MEM vrt Derived HFA SDTS NITF GXF AAIGrid CEOS SAR_CEOS XPM DTED JDEM Envisat ELAS FIT L1B RS2 ILWIS RMF Leveller SGI SRTMHGT IDRISI GSG ERS PALSARJaxa DIMAP GFF COSAR PDS ADRG COASP TSX Terragen BLX MSGN TIL R northwood SAGA XYZ ESRIC HF2 KMLSUPEROVERLAY CTG ZMap NGSGEOID IRIS MAP CALS SAFE SENTINEL2 PRF MRF WMTS GRIB BMP TGA STACTA BSB AIGrid ARG USGSDEM AirSAR OZI PCIDSK SIGDEM RIK STACIT PDF PNG GIF WCS HTTP netCDF Zarr DAAS EEDA HDF5 PLMOSAIC WMS OGCAPI WEBP HDF4 Rasterlite MBTiles PostGISRaster KEA JP2OpenJPEG TileDB PCRaster JPEGXL MrSID GEOR ECW_JP2ECW MEM geojson TAB Shape KML VRT AVC GML CSV DGN GMT NTF S57 Tiger Geoconcept GeoRSS DXF PGDump GPSBabel EDIGEO SXF OpenFileGDB WAsP Selafin JML VDV FlatGeobuf MapML JSONFG SDTS GPX GMLAS SVG CSW FileGDB LIBKML NAS PLSCENES SOSI WFS NGW Elastic Idrisi PDS SQLite GeoPackage OSM VFK MVT PMTiles AmigoCloud Carto ILI MySQL PG MSSQLSpatial ODBC PGeo XLSX XLS CAD Parquet Arrow GTFS OCI ODS OGDI LVBAG HANA"
+CONFIG_PLUGINDIR="C:/src/osgeo4w/src/gdal/osgeo4w/install/apps/gdal/lib/gdalplugins"
+usage()
+
+{
+	cat <<EOF
+Usage: gdal-config [OPTIONS]
+Options:
+	[--prefix[=DIR]]
+	[--libs]
+	[--dep-libs]
+	[--cflags]
+	[--datadir]
+	[--version]
+	[--ogr-enabled]
+	[--gnm-enabled]
+	[--formats]
+	[--plugindir]
+EOF
+	exit $1
+}
+
+if test $# -eq 0; then
+	usage 1 1>&2
+fi
+
+case $1 in
+  --libs)
+    echo $CONFIG_LIBS
+    ;;
+
+  --dep-libs)
+    echo $CONFIG_DEP_LIBS
+    ;;
+
+  --cflags)
+    echo $CONFIG_CFLAGS
+    ;;
+
+  --datadir)
+    echo $CONFIG_DATA
+    ;;
+
+  --prefix)
+    echo $CONFIG_PREFIX
+    ;;
+
+  --version)
+    echo $CONFIG_VERSION
+    ;;
+
+  --ogr-enabled)
+    echo yes
+    ;;
+
+  --gnm-enabled)
+    echo $CONFIG_GNM_ENABLED
+    ;;
+
+  --formats)
+    echo $CONFIG_FORMATS
+    ;;
+
+  --plugindir)
+    echo $CONFIG_PLUGINDIR
+    ;;
+
+  *)
+    usage 1 1>&2
+    ;;
+
+esac
