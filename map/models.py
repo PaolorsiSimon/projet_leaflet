@@ -260,6 +260,9 @@ class LienRenumar(models.Model):
     
     def __str__(self):
         return self.titre
+    
+    class Meta:
+        verbose_name = "Liens Renumar"
 
 
 # ---------- ICI TOUTE LES CLASSES SECONDAIRES, liaisons entre les clases principales -----------
