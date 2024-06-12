@@ -229,8 +229,8 @@ class Metier(models.Model):
         return self.nom
 
 class Personnage(models.Model):
-    nom=models.CharField(max_length=255, null=True)
-    prenom=models.CharField(max_length=255, null=True)
+    nom=models.CharField(max_length=255, null=True, blank=True)
+    prenom=models.CharField(max_length=255, null=True, blank=True)
 
     metiers_personnage = models.ForeignKey(
         Metier,
@@ -256,7 +256,7 @@ class LienRenumar(models.Model):
     titre= models.CharField(max_length=255, default='lien renumar')
     lien = models.URLField()
     #mettre commentaire pas obligatoire
-    commentaire = models.TextField(null=True, blank=True)
+    commentaire = models.TextField(null=True, blank=True, help_text="Commentaire sur ce qui est présent sur le site donné via l'url")
     
     def __str__(self):
         return self.titre
