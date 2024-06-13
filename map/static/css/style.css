@@ -129,7 +129,7 @@ body {
 
 /* Ajout effet couleur hover sur les liens */
 a {
-  color:#2A8387;
+  color:#CFD8DC;
   text-decoration: none;
 }
 a:hover {
@@ -162,12 +162,12 @@ a:hover {
   display: block;
   border: #2A8387 5px, solid;
   border-radius: 5px;
-  background-color: #CFD8DC;
+  background-color: #2A8387;
   }
 
   figcaption {
     font-size: 0.9em;
-    color: #2A8387;
+    color: #CFD8DC;
     text-align: center;
     margin-top: 5px;
 }
