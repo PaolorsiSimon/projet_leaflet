@@ -165,10 +165,11 @@ a:hover {
   }
 
 .text-container {
-  display: flex;
+  display: grid;
   align-items: center;
   justify-content: center;
   text-align: justify;
+  grid-template-rows: auto 1fr;
 }
 
 .text-container p {
