@@ -15,6 +15,9 @@ class CoursDeau(models.Model):
     path = models.CharField(max_length=255, null=True)
     geom = models.MultiLineStringField(srid=4326)
 
+    class Meta:
+        verbose_name_plural="Cours D'eau"
+
 
 
 class LoireModel(models.Model):
@@ -24,6 +27,9 @@ class LoireModel(models.Model):
     candidat = models.CharField(max_length=255, null=True)
     classe = models.IntegerField()
     geom = models.MultiLineStringField(srid=4326)
+
+    class Meta:
+        verbose_name_plural="Modèle de la loire"
 
 
 
@@ -218,7 +224,7 @@ class Metier(models.Model):
     #mettre commentaire pas obligatoire
     description = models.TextField(null=True, blank=True, help_text='Description du métier')
     class Meta:
-        verbose_name_plural = "Metiers"
+        verbose_name_plural = "Métiers"
 
     def clean(self):
         super().clean() #ici pour checker en lower
@@ -262,7 +268,7 @@ class LienRenumar(models.Model):
         return self.titre
     
     class Meta:
-        verbose_name = "Liens Renumar"
+        verbose_name_plural = "Liens Renumar"
 
 
 # ---------- ICI TOUTE LES CLASSES SECONDAIRES, liaisons entre les clases principales -----------
