@@ -319,41 +319,6 @@ class MetierDansGlossaire(models.Model):
         ]
 
 
-##liens vers point et itineraire
-
-# class PointDansItineraire(models.Model):
-#     fk_pointInteret = models.ForeignKey('PointInteret', models.CASCADE)
-#     fk_itineraire = models.ForeignKey('Itineraire', models.CASCADE, related_name="points")
-#     positionDansItineraire = models.IntegerField()
-
-#     class Meta:
-#         constraints = [
-#             models.UniqueConstraint(fields=['fk_pointInteret', 'fk_itineraire',], name='unique_pointDansItineraire'),
-#             models.UniqueConstraint(fields=['fk_itineraire', 'positionDansItineraire'], name='unique_positionDansItineraire')
-
-#         ]
-#         ordering = ['positionDansItineraire']
-    
-#     def __str__(self):
-#         return f"{self.fk_pointInteret} à la position {self.positionDansItineraire} dans {self.fk_itineraire}"
-
-
-
-class MateriauxDansPoint(models.Model):
-    fk_materiaux = models.ForeignKey('Materiaux', models.CASCADE)
-    fk_pointInteret = models.ForeignKey('PointInteret', models.CASCADE)
-
-    def __str__(self):
-        return f'{self.fk_pointInteret}/{self.fk_materiaux}'
-
-    class Meta :
-        verbose_name_plural = 'points/materiaux'
-        verbose_name = 'point/materiaux'
-        constraints=[
-            models.UniqueConstraint(fields=['fk_pointInteret','fk_materiaux'], name='unique_materiauxDansPoint')
-        ]
-
-
 
 class MateriauxDansItineraire(models.Model):
     fk_itineraire = models.ForeignKey('Itineraire', models.CASCADE)

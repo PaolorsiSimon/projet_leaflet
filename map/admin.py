@@ -5,8 +5,7 @@ from leaflet.admin import LeafletGeoAdmin
 from .models import (
     PointInteret, Itineraire, PointDansItineraire, TypePointInteret, 
     Materiaux, Glossaire, Metier, Personnage, LienRenumar,
-    PointDansGlossaire, ItineraireDansGlossaire, MetierDansGlossaire, 
-    MateriauxDansPoint, MateriauxDansItineraire, PersonnageDansItineraire,
+    PointDansGlossaire, ItineraireDansGlossaire, MetierDansGlossaire, MateriauxDansItineraire, PersonnageDansItineraire,
     LienRenumarPointInteret, LienRenumarItineraire, LoireModel, CoursDeau
 )
 
