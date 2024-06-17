@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'projet_leaflet.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
+# password = input("entrez votre mot de passe postgres : ")
 DATABASES = {
     "default": {
         "ENGINE": "django.contrib.gis.db.backends.postgis",

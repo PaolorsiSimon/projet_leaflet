@@ -4,7 +4,6 @@ var osmLayer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
 });
 
 // Créer une couche de tuiles Cassini
-// Créer une couche de tuiles Cassini
 var cassiniLayer = L.tileLayer.wms('https://ws.sogefi-web.com/wms', {
     layers: 'Carte_Cassini',
     format: 'image/png', // Format d'image pris en charge
@@ -14,7 +13,8 @@ var cassiniLayer = L.tileLayer.wms('https://ws.sogefi-web.com/wms', {
 
 // Créer une carte avec la couche de tuiles OpenStreetMap comme vue par défaut
 var map = L.map("map", {
-  layers: [osmLayer] // Utiliser la couche de tuiles OpenStreetMap comme vue par défaut
+  layers: [osmLayer],
+  fullscreenControl: true // Utiliser la couche de tuiles OpenStreetMap comme vue par défaut
 }).setView([47.399452334950986, 0.6850264790425225], 11);
 
 // Ajouter les deux couches de tuiles à un contrôle de couches pour permettre à l'utilisateur de basculer entre elles
@@ -23,7 +23,6 @@ var baseLayers = {
   "Carte Cassini": cassiniLayer
 };
 
-// Créer un contrôle de couches pour basculer entre les couches de tuiles
 
 var pointsLayer = L.layerGroup();
 
