@@ -82,7 +82,7 @@ DATABASES = {
         "ENGINE": "django.contrib.gis.db.backends.postgis",
         "HOST": "localhost",
         "NAME": "projet_leaflet",
-        "PASSWORD": "root",#BIEN METTRE SON MOT DE PASSE
+        "PASSWORD": "root",#mot_de_passe
         "USER": "postgres",
     }
 }
