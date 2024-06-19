@@ -18,4 +18,4 @@ installer rq_mac.txt, verifier si l'installation est effectuée correctement
 pour la base de données : 
   - aller dans le fichier settings.py, puis rechercher "mot_de_passe", a cette ligne il faudra changer le mot de passe "root" par votre mot de passe pgadmin
   - créer une migration "python manage.py makemigrations", puis executer la avecv "python manage.py migrate", cela va créer les tables de notre base de données
-  - pour inserer les données effectuer la commande suivante : psql -U postgres -d ma_bdd -f backupfile.sql
+  - pour inserer les données effectuer la commande suivante : psql -U postgres -d projet_leaflet -f backupfile.sql
