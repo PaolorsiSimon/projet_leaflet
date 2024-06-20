@@ -11,11 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
 from pathlib import Path
-import dj_database_url
-import environ
 
-env = environ.Env()
-environ.Env.read.env()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -82,19 +78,16 @@ WSGI_APPLICATION = 'projet_leaflet.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 # password = input("entrez votre mot de passe postgres : ")
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.contrib.gis.db.backends.postgis",
-#         "HOST": "localhost",
-#         "NAME": "projet_leaflet",
-#         "PASSWORD": "root",#mot_de_passe
-#         "USER": "postgres",
-#     }
-# }
-
 DATABASES = {
-    'default': dj_database_url.parse(env('DATABSE_URL'))
+    "default": {
+        "ENGINE": "django.contrib.gis.db.backends.postgis",
+        "HOST": "localhost",
+        "NAME": "projet_leaflet",
+        "PASSWORD": "root",#mot_de_passe
+        "USER": "postgres",
+    }
 }
+
 
 
 # Password validation
