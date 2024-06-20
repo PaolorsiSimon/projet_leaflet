@@ -114,7 +114,7 @@ admin.site.register(Materiaux)
 admin.site.register(Personnage)
 admin.site.register(TypePointInteret)
 admin.site.register(LienRenumar)
-admin.site.register(PointDansItineraire)
+# admin.site.register(PointDansItineraire)
 
 
 
