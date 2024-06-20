@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-fv-u+$^*ypk57_%+pnj(1d2&wv^w8=(rcejyg$b-5rqyog_qsa
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://projet-leaflet.onrender.com/',]
+ALLOWED_HOSTS = ['https://chaloire.onrender.com/',]
 
 
 # Application definition
