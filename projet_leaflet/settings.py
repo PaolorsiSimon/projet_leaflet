@@ -84,7 +84,7 @@ DATABASES = {
         "HOST": "localhost",
         "NAME": "projet_leaflet",
         "PASSWORD": "root",#mot_de_passe
-        "USER": "postgres",
+        "USER": "spa",
     }
 }
 

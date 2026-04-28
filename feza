@@ -1,0 +1,7 @@
+sudo -u postgres psql <<EOF
+DROP DATABASE IF EXISTS projet_leaflet;
+CREATE USER spa WITH PASSWORD 'root';
+CREATE DATABASE projet_leaflet OWNER spa;
+\c projet_leaflet
+CREATE EXTENSION postgis;
+EOF
