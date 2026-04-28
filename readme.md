@@ -28,14 +28,14 @@ sudo systemctl enable postgresql
 
 ```bash
 sudo -u postgres psql <<EOF
-CREATE USER spa WITH PASSWORD 'root';
-CREATE DATABASE projet_leaflet OWNER spa;
+CREATE USER user WITH PASSWORD 'root';
+CREATE DATABASE projet_leaflet OWNER user;
 \c projet_leaflet
 CREATE EXTENSION postgis;
 EOF
 ```
 
-> Remplace `spa` et `root` par l'utilisateur et le mot de passe de ton choix,
+> Remplace `user` et `root` par l'utilisateur et le mot de passe de ton choix,
 > et répercute ces valeurs dans `projet_leaflet/settings.py`.
 
 ---
@@ -61,7 +61,7 @@ DATABASES = {
         "HOST": "localhost",
         "NAME": "projet_leaflet",
         "PASSWORD": "root",       # ton mot de passe
-        "USER": "spa",            # ton utilisateur
+        "USER": "user",            # ton utilisateur
     }
 }
 ```
@@ -118,8 +118,8 @@ cd projet_leaflet
 sudo apt update && sudo apt install -y postgresql postgresql-contrib postgis
 sudo systemctl start postgresql
 
-sudo -u postgres psql -c "CREATE USER spa WITH PASSWORD 'root';"
-sudo -u postgres psql -c "CREATE DATABASE projet_leaflet OWNER spa;"
+sudo -u postgres psql -c "CREATE USER user WITH PASSWORD 'root';"
+sudo -u postgres psql -c "CREATE DATABASE projet_leaflet OWNER user;"
 sudo -u postgres psql -d projet_leaflet -c "CREATE EXTENSION postgis;"
 
 python3 -m venv venv && source venv/bin/activate
